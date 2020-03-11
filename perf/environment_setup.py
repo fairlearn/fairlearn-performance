@@ -21,6 +21,7 @@ def build_package():
                      shell=True).wait()
     for root, dirs, files in os.walk(os.path.join("fairlearn", "dist")):
         for file in files:
+            print(file)
             if file.endswith(".whl"):
                 print("Found wheel {}".format(file))
                 # change wheel name to be unique for every run
