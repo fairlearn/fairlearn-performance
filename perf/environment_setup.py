@@ -7,6 +7,9 @@ import shutil
 import subprocess
 import time
 
+import logging
+logger = logging.getLogger(__file__)
+
 
 def build_package():
     print('removing build directory')
@@ -22,7 +25,7 @@ def build_package():
                      shell=True).wait()
     for root, dirs, files in os.walk(os.path.join("fairlearn", "dist")):
         for file in files:
-            print(file)
+            logger.warn(file)
             if file.endswith(".whl"):
                 print("Found wheel {}".format(file))
                 # change wheel name to be unique for every run
