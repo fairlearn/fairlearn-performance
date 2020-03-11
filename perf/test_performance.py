@@ -23,9 +23,9 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 # ensure the tests are run from the fairlearn repository base directory
-if not os.getcwd().endswith("fairlearn-performance") or not os.path.exists("perf"):
-    raise Exception("Please run perf tests from the fairlearn-performance repository base "
-                    "directory. Current working directory: {}".format(os.getcwd()))
+if not os.path.exists(os.path.join("fairlearn-performance", "perf")):
+    raise Exception("Please run perf tests from outside the fairlearn-performance repository "
+                    "base directory. Current working directory: {}".format(os.getcwd()))
 
 
 @pytest.mark.parametrize("perf_test_configuration", all_perf_test_configurations,
