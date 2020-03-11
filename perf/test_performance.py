@@ -37,7 +37,7 @@ def test_perf(perf_test_configuration, workspace, request, wheel_file):
     generate_script(request, perf_test_configuration, script_name, SCRIPT_DIRECTORY)
 
     experiment = Experiment(workspace=workspace, name=EXPERIMENT_NAME)
-    compute_target = workspace.get_default_compute_target(type='cpu')
+    compute_target = workspace.compute_targets['cpu-cluster']
     run_config = RunConfiguration()
     run_config.target = compute_target
 
