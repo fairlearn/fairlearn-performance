@@ -7,9 +7,8 @@ import pytest
 
 from azureml.core import Experiment, RunConfiguration, ScriptRunConfig
 
-from tempeh.execution.azureml.environment_setup import configure_environment
-
 from conftest import get_all_perf_test_configurations
+from environment_setup import configure_environment
 from script_generation import generate_script
 
 all_perf_test_configurations = get_all_perf_test_configurations()
@@ -42,7 +41,8 @@ def test_perf(perf_test_configuration, workspace, request, wheel_file):
     run_config = RunConfiguration()
     run_config.target = compute_target
 
-    environment = configure_environment(workspace, wheel_file=wheel_file)
+    environment = configure_environment(workspace, wheel_file=wheel_file,
+                                        requirements_file=os.path.join("fairlearn", "requirements.txt"))
     run_config.environment = environment
     environment.register(workspace=workspace)
     script_run_config = ScriptRunConfig(source_directory=SCRIPT_DIRECTORY,
