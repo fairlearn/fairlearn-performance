@@ -16,17 +16,16 @@ all_perf_test_configurations = get_all_perf_test_configurations()
 all_perf_test_configurations_descriptions = \
     [config.__repr__().replace(' ', '') for config in all_perf_test_configurations]
 
-SCRIPT_DIRECTORY = os.path.join('test', 'perf', 'scripts')
+SCRIPT_DIRECTORY = os.path.join('perf', 'scripts')
 EXPERIMENT_NAME = "perftest"
 
 logging.basicConfig(level=logging.DEBUG)
 
 
 # ensure the tests are run from the fairlearn repository base directory
-if not os.getcwd().endswith("fairlearn"):
-    if not os.path.exists("test") or not os.path.exists("fairlearn"):
-        raise Exception("Please run perf tests from the fairlearn repository base directory. "
-                        "Current working directory: {}".format(os.getcwd()))
+if not os.getcwd().endswith("fairlearn-performance") or not os.path.exists("perf"):
+    raise Exception("Please run perf tests from the fairlearn-performance repository base "
+                    "directory. Current working directory: {}".format(os.getcwd()))
 
 
 @pytest.mark.parametrize("perf_test_configuration", all_perf_test_configurations,

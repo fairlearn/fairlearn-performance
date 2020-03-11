@@ -1,0 +1,52 @@
+name: Performance-Test
+
+on:
+  schedule:
+  - cron:  '0 6 * * *'  # Time is in UTC
+  pull_request
+
+jobs:
+  add-reviewers:
+    runs-on: ubuntu-latest
+
+  strategy:
+    matrix:
+      datasets: ["adult_uci", "compas"]
+      predictors: ["rbm_svm", "decision_tree_classifier"]
+      mitigators: ["GridSearch", "ExponentiatedGradient", "ThresholdOptimizer"]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        path: fairlearn-performance
+
+    - name: Checkout Fairlearn repository
+      uses: actions/checkout@v2
+      with:
+        repository: fairlearn/fairlearn
+        path: fairlearn
+
+    - run: pip install -r fairlearn-performance/requirements.txt
+      name: 'Install required packages'
+      shell: bash
+    
+    - run: python -m pytest -s fairlearn-automation/perf --junitxml=./TEST--TEST.xml -o junit_suite_name="$(Agent.JobName)"
+      name: 'Run Perf tests'
+      shell: bash
+      with:
+        SERVICE_PRINCIPAL_PASSWORD: "${{secrets.fairlearnautomationspsecret}}"
+        SERVICE_PRINCIPAL_ID: "${{secrets.fairlearnautomationspid}}"
+        TENANT_ID: "${{secrets.fairlearnautomationsptenantid}}"
+      env:
+        SUBSCRIPTION_ID: cecafb73-04ae-4432-9f96-d96925d28058
+        RESOURCE_GROUP_NAME: fairlearn-automation
+        WORKSPACE_NAME: fairlearnperf
+        WORKSPACE_LOCATION: canadacentral
+
+    - name: 'Publish Test Results **/TEST-*.xml'
+      uses: actions/upload-artifact@v1
+      with:
+        name: results
+        path: ./TEST--TEST.xml
+
