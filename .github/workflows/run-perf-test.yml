@@ -6,14 +6,8 @@ on:
   pull_request
 
 jobs:
-  add-reviewers:
+  run-perf-test:
     runs-on: ubuntu-latest
-
-  strategy:
-    matrix:
-      datasets: ["adult_uci", "compas"]
-      predictors: ["rbm_svm", "decision_tree_classifier"]
-      mitigators: ["GridSearch", "ExponentiatedGradient", "ThresholdOptimizer"]
 
     steps:
     - name: Checkout
