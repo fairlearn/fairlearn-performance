@@ -53,7 +53,7 @@ jobs:
         WORKSPACE_NAME: fairlearnperf
         WORKSPACE_LOCATION: canadacentral
 
-    - name: 'Publish Test Results **/TEST-*.xml'
+    - name: 'Publish Test Results ./TEST--TEST.xml'
       uses: actions/upload-artifact@v1
       with:
         name: results
