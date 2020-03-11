@@ -22,19 +22,32 @@ jobs:
       with:
         repository: fairlearn/fairlearn
         path: fairlearn
+    
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    
+    - name: Install dependencies
+      run: python -m pip install --upgrade pip setuptools wheel
 
     - run: pip install -r fairlearn-performance/requirements.txt
       name: 'Install required packages'
       shell: bash
     
+    # TODO: It would be more elegant to use a GitHub Action for Azure login.
+    # However, the login is currently set through tempeh, so this will have to wait.  
+    #- uses: azure/login@v1
+    #  with:
+    #    creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
     - run: python -m pytest -s fairlearn-automation/perf --junitxml=./TEST--TEST.xml -o junit_suite_name="$(Agent.JobName)"
       name: 'Run Perf tests'
       shell: bash
-      with:
+      env:
         SERVICE_PRINCIPAL_PASSWORD: "${{secrets.fairlearnautomationspsecret}}"
         SERVICE_PRINCIPAL_ID: "${{secrets.fairlearnautomationspid}}"
         TENANT_ID: "${{secrets.fairlearnautomationsptenantid}}"
-      env:
         SUBSCRIPTION_ID: cecafb73-04ae-4432-9f96-d96925d28058
         RESOURCE_GROUP_NAME: fairlearn-automation
         WORKSPACE_NAME: fairlearnperf
