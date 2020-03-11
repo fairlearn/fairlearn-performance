@@ -41,7 +41,7 @@ jobs:
     #  with:
     #    creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    - run: python -m pytest -s fairlearn-automation/perf --junitxml=./TEST--TEST.xml -o junit_suite_name="$(Agent.JobName)"
+    - run: python -m pytest -s ./perf --junitxml=./TEST--TEST.xml -o junit_suite_name="$(Agent.JobName)"
       name: 'Run Perf tests'
       shell: bash
       env:
