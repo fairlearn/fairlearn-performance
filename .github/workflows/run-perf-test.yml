@@ -3,7 +3,9 @@ name: Performance-Test
 on:
   schedule:
   - cron:  '0 6 * * *'  # Time is in UTC
-  pull_request
+  pull_request:
+    branches:
+    - master
 
 jobs:
   run-perf-test:
