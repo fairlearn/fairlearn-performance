@@ -41,7 +41,7 @@ jobs:
     #  with:
     #    creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    - run: cwd
+    - run: pwd
       shell: bash
 
     - run: python -m pytest --junitxml=./TEST--TEST.xml -o junit_suite_name="$(Agent.JobName)"
