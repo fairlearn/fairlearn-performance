@@ -9,7 +9,7 @@ on:
 
 jobs:
   run-perf-test:
-    runs-on: ubuntu-latest
+    runs-on: 'vs2017-win2016'
 
     steps:
     - name: Checkout
@@ -41,7 +41,7 @@ jobs:
     #  with:
     #    creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - run: python -m pytest -s ./fairlearn-performance/perf --junitxml=./TEST--TEST.xml
+    - run: python -m pytest -s ./fairlearn-performance/perf --junitxml=./TEST.xml
       name: 'Run Perf tests'
       shell: bash
       env:
@@ -53,9 +53,9 @@ jobs:
         WORKSPACE_NAME: fairlearnperf
         WORKSPACE_LOCATION: canadacentral
 
-    - name: 'Publish Test Results ./TEST--TEST.xml'
+    - name: 'Publish Test Results ./TEST.xml'
       uses: actions/upload-artifact@v1
       with:
         name: results
-        path: ./TEST--TEST.xml
+        path: ./TEST.xml
 
