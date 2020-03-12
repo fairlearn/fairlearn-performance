@@ -24,12 +24,12 @@ def build_package():
                      cwd=os.path.join(os.getcwd(), "fairlearn"),
                      shell=True).wait()
     for root, dirs, files in os.walk(os.path.join("fairlearn", "dist")):
-        for file in files:
-            logger.warn(file)
-            if file.endswith(".whl"):
-                print("Found wheel {}".format(file))
+        for file_ in files:
+            logger.warn(file_)
+            if file_.endswith(".whl"):
+                print("Found wheel {}".format(file_))
                 # change wheel name to be unique for every run
-                src = os.path.join("fairlearn", "dist", file)
+                src = os.path.join("fairlearn", "dist", file_)
                 dst = os.path.join("fairlearn", "dist", "fairlearn-v{}-py3-none-any.whl"
                                    .format(time.time()))
                 shutil.copy(src, dst)
