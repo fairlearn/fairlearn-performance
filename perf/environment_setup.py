@@ -17,9 +17,10 @@ def build_package():
     shutil.rmtree(os.path.join("fairlearn", "dist"), True)
 
     print('running python setup.py bdist_wheel')
-    subprocess.Popen(["python", "setup.py", "bdist_wheel"],
-                     cwd=os.path.join(os.getcwd(), "fairlearn"),
-                     shell=True).wait()
+    output = subprocess.check_output(["python", "setup.py", "bdist_wheel"],
+                                     cwd=os.path.join(os.getcwd(), "fairlearn"),
+                                     shell=True).decode('utf-8')
+    print(output)
     for root, dirs, files in os.walk(os.path.join("fairlearn", "dist")):
         for file_ in files:
             if file_.endswith(".whl"):

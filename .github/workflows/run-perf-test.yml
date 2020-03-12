@@ -41,19 +41,6 @@ jobs:
     #  with:
     #    creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - run: python setup.py bdist_wheel
-      name: 'build fairlearn package'
-      shell: bash
-      working-directory: ./fairlearn
-    
-    - run: ls fairlearn/dist
-      name: 'debug - ls'
-      shell: bash
-    
-    - run: python -c "import os; print(list(os.walk(os.path.join('fairlearn', 'dist'))))"
-      name: 'python -c'
-      shell: bash
-
     - run: python -m pytest -s ./fairlearn-performance/perf --junitxml=./TEST--TEST.xml
       name: 'Run Perf tests'
       shell: bash
