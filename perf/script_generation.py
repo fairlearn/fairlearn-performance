@@ -112,14 +112,9 @@ def add_additional_metric_calculation(script_lines, perf_test_configuration):
     # For that reason we need metrics to compare the mitigation time with the time that the
     # estimators took since fairlearn only controls the mitigation overhead and not the estimator
     # training time.
-    if perf_test_configuration.mitigator == ExponentiatedGradient.__name__:
-        script_lines.append("n_oracle_calls = mitigator._expgrad_result.n_oracle_calls")
-        script_lines.append("oracle_calls_execution_time = mitigator._expgrad_result.oracle_calls_execution_time")
-    elif perf_test_configuration.mitigator == GridSearch.__name__:
-        script_lines.append("n_oracle_calls = len(mitigator._all_results)")
-        script_lines.append("oracle_calls_execution_time = [result._oracle_call_execution_time for result in mitigator._all_results]")
-
     if perf_test_configuration.mitigator in [ExponentiatedGradient.__name__, GridSearch.__name__]:
+        script_lines.append("n_oracle_calls = len(mitigator._oracle_calls_execution_time)")
+        script_lines.append("oracle_calls_execution_time = mitigator._oracle_calls_execution_time")
         add_metric_logging_script(script_lines, "metric_logging_script_expgrad_gridsearch.txt")
     elif perf_test_configuration.mitigator in [ThresholdOptimizer.__name__]:
         add_metric_logging_script(script_lines, "metric_logging_script_postprocessing.txt")
