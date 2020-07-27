@@ -7,11 +7,7 @@ from fairlearn.postprocessing import ThresholdOptimizer
 from fairlearn.reductions import ExponentiatedGradient, GridSearch, EqualizedOdds, \
     DemographicParity
 
-try:
-    from .workspace import get_workspace
-except ImportError:
-    raise Exception("fairlearn performance tests require azureml-sdk to be installed.")
-
+from workspace import get_workspace
 from environment_setup import build_package
 
 
