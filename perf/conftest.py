@@ -8,7 +8,7 @@ from fairlearn.reductions import ExponentiatedGradient, GridSearch, EqualizedOdd
     DemographicParity
 
 try:
-    from tempeh.execution.azureml.workspace import get_workspace
+    from .workspace import get_workspace
 except ImportError:
     raise Exception("fairlearn performance tests require azureml-sdk to be installed.")
 
