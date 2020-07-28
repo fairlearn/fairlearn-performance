@@ -33,6 +33,17 @@ logger = logging.getLogger(__file__)
 
 
 def get_workspace(compute_name=None, compute_config=None):
+    if TENANT_ID is None or \
+            SERVICE_PRINCIPAL_ID is None or \
+            SERVICE_PRINCIPAL_PASSWORD is None or \
+            SUBSCRIPTION_ID is None or \
+            RESOURCE_GROUP_NAME is None or \
+            WORKSPACE_NAME is None or \
+            WORKSPACE_LOCATION is None:
+        print("One of the required environment variables is not set. "
+              "Running locally instead.")
+        return None
+
     logger.info("Logging in as service principal.")
     auth = ServicePrincipalAuthentication(TENANT_ID,
                                           SERVICE_PRINCIPAL_ID,

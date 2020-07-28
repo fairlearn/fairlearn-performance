@@ -1,10 +1,14 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
+if hasattr(mitigator, 'n_oracle_calls_'):  # ExponentiatedGradient
+    n_oracle_calls = mitigator.n_oracle_calls_
+else:  # GridSearch
+    n_oracle_calls = mitigator.grid_size
+oracle_calls_execution_time = mitigator.oracle_execution_times_
+
 assert 'mitigation_execution_time' in vars(), "mitigation_execution_time is expected to be defined"
 assert 'estimator_fit_execution_time' in vars(), "estimator_fit_execution_time is expected to be defined"
-assert 'n_oracle_calls' in vars(), "n_oracle_calls is expected to be defined"
-assert 'oracle_calls_execution_time' in vars(), "oracle_calls_execution_time is expected to be defined"
 
 sum_oracle_calls_execution_time = sum(oracle_calls_execution_time)
 

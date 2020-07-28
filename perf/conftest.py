@@ -4,8 +4,7 @@
 import pytest
 
 from fairlearn.postprocessing import ThresholdOptimizer
-from fairlearn.reductions import ExponentiatedGradient, GridSearch, EqualizedOdds, \
-    DemographicParity
+from fairlearn.reductions import ExponentiatedGradient, GridSearch
 
 from workspace import get_workspace
 from environment_setup import build_package
@@ -21,43 +20,43 @@ TIME = "time"
 ADULT_UCI = 'adult_uci'
 COMPAS = 'compas'
 
-RBM_SVM = 'rbm_svm'
-DECISION_TREE_CLASSIFIER = 'decision_tree_classifier'
+RBM_SVM = 'SVC()'
+DECISION_TREE_CLASSIFIER = 'DecisionTreeClassifier()'
 
 DATASETS = [ADULT_UCI, COMPAS]
-PREDICTORS = [RBM_SVM, DECISION_TREE_CLASSIFIER]
+ESTIMATORS = [RBM_SVM, DECISION_TREE_CLASSIFIER]
 MITIGATORS = [THRESHOLD_OPTIMIZER, EXPONENTIATED_GRADIENT, GRID_SEARCH]
 
 
 class PerfTestConfiguration:
-    def __init__(self, dataset, predictor, mitigator, disparity_metric):
+    def __init__(self, dataset, estimator, mitigator, disparity_metric):
         self.dataset = dataset
-        self.predictor = predictor
+        self.estimator = estimator
         self.mitigator = mitigator
         self.disparity_metric = disparity_metric
 
     def __repr__(self):
-        return "[dataset: {}, predictor: {}, mitigator: {}, disparity_metric: {}]" \
-               .format(self.dataset, self.predictor, self.mitigator, self.disparity_metric)
+        return "[dataset: {}, estimator: {}, mitigator: {}, disparity_metric: {}]" \
+               .format(self.dataset, self.estimator, self.mitigator, self.disparity_metric)
 
 
 def get_all_perf_test_configurations():
     perf_test_configurations = []
     for dataset in DATASETS:
-        for predictor in PREDICTORS:
+        for estimator in ESTIMATORS:
             for mitigator in MITIGATORS:
                 if mitigator == THRESHOLD_OPTIMIZER:
-                    disparity_metrics = ["equalized_odds", "demographic_parity"]
+                    disparity_metrics = ["'equalized_odds'", "'demographic_parity'"]
                 elif mitigator == EXPONENTIATED_GRADIENT:
-                    disparity_metrics = [EqualizedOdds.__name__, DemographicParity.__name__]
+                    disparity_metrics = ["EqualizedOdds()", "DemographicParity()", "ErrorRateParity()", "FalsePositiveRateParity()", "TruePositiveRateParity()"]
                 elif mitigator == GRID_SEARCH:
-                    disparity_metrics = [EqualizedOdds.__name__, DemographicParity.__name__]
+                    disparity_metrics = ["EqualizedOdds()", "DemographicParity()", "ErrorRateParity()", "FalsePositiveRateParity()", "TruePositiveRateParity()"]
                 else:
                     raise Exception("Unknown mitigator {}".format(mitigator))
 
                 for disparity_metric in disparity_metrics:
                     perf_test_configurations.append(
-                        PerfTestConfiguration(dataset, predictor, mitigator, disparity_metric))
+                        PerfTestConfiguration(dataset, estimator, mitigator, disparity_metric))
 
     return perf_test_configurations
 
