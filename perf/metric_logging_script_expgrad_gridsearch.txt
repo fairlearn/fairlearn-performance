@@ -5,7 +5,7 @@ if hasattr(mitigator, 'n_oracle_calls_'):  # ExponentiatedGradient
     n_oracle_calls = mitigator.n_oracle_calls_
 else:  # GridSearch
     n_oracle_calls = mitigator.grid_size
-oracle_calls_execution_time = mitigator.oracle_execution_times_
+oracle_execution_times = mitigator.oracle_execution_times_
 
 assert 'mitigation_execution_time' in vars(), "mitigation_execution_time is expected to be defined"
 assert 'estimator_fit_execution_time' in vars(), "estimator_fit_execution_time is expected to be defined"
