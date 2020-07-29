@@ -36,7 +36,7 @@ jobs:
       shell: bash
     
     # TODO: It would be more elegant to use a GitHub Action for Azure login.
-    # However, the login is currently set through custom code, so this will have to wait.  
+    # However, the login is currently set up through custom code, so this will have to wait.  
     #- uses: azure/login@v1
     #  with:
     #    creds: ${{ secrets.AZURE_CREDENTIALS }}
