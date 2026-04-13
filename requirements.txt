@@ -18,7 +18,7 @@ requirements-parser
 
 # Required for test
 # Pin pytest due to VS Code issue
-pytest==5.0.1
+pytest==9.0.3
 tempeh==0.1.12
 wheel
 azureml-sdk
